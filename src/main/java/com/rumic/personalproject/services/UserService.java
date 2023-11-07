@@ -5,6 +5,9 @@ import com.rumic.personalproject.repositories.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.text.MessageFormat;
+import java.util.Optional;
+
 @Service
 public class UserService {
     @Autowired
@@ -12,7 +15,10 @@ public class UserService {
 
     // Create a new user
     public User create(User user) {
-        System.out.println(user.getEmail());
         return userRepository.save(user);
+    }
+    public User get(Long id){
+        return userRepository.findById(id)
+                .orElseThrow(() -> new RuntimeException("fadasf"));
     }
 }

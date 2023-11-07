@@ -1,12 +1,10 @@
 package com.rumic.personalproject.entities;
 
+import com.rumic.personalproject.dtos.CreateUserDTO;
 import jakarta.persistence.*;
 import lombok.*;
 
-import java.util.Date;
-
 @Getter
-@Data
 @Setter
 @AllArgsConstructor
 @NoArgsConstructor
@@ -14,13 +12,18 @@ import java.util.Date;
 @Table(name= "user")
 public class User {
     @Id
-    private String id;
+    @Column(name = "id")
+    @GeneratedValue(strategy = GenerationType.AUTO)
+    private Long id;
+    @Column(name = "password")
     private String password;
+    @Column(name = "email")
     private String email;
-//    private String phn;
-//    private String rle;
-//    private String gdr;
-//    private Date dob;
-//    private Date cre_at;
-//    private Date up_at;
+    public static User init(CreateUserDTO createUserDto){
+        User user = new User();
+        user.setId(createUserDto.getId());
+        user.setEmail(createUserDto.getEmail());
+        user.setPassword(createUserDto.getPassword());
+        return user;
+    }
 }

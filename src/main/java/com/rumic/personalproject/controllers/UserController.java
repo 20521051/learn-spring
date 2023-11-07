@@ -1,37 +1,34 @@
 package com.rumic.personalproject.controllers;
 
+import com.rumic.personalproject.dtos.CreateUserDTO;
 import com.rumic.personalproject.entities.User;
 import com.rumic.personalproject.services.UserService;
-import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.repository.query.Param;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
-
-import java.util.Date;
-import java.util.Optional;
 
 @RestController
 @RequestMapping("/users")
 @ApiResponse
 public class UserController {
 
-    private final UserService userService;
     @Autowired
-    public UserController(UserService userService) {
-        this.userService = userService;
-    }
-    @GetMapping()
-    public String get(){
-        return "a";
+    private UserService userService;
+
+    @GetMapping("/{id}")
+    public String get(@PathVariable Long id){
+        System.out.println("Test API");
+        return userService.get(id).getEmail();
     }
 
     // Create a new user
-    @PostMapping(value = {""})
-    public ResponseEntity<User> createUser(@RequestBody User userDto) {
-        User user = userService.create(userDto);
-        System.out.println(userDto.getEmail());
-        return new ResponseEntity<>(user, HttpStatus.OK);
+    @PostMapping()
+    public ResponseEntity<User> createUser(@RequestBody CreateUserDTO createUserDTO) {
+        User user = User.init(createUserDTO);
+        userService.create(user);
+        return new ResponseEntity<User>(user, HttpStatus.OK);
     }
 }
