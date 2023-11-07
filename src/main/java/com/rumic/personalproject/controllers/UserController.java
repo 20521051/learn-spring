@@ -28,7 +28,7 @@ public class UserController {
     }
 
     // Create a new user
-    @PostMapping(value = {""},consumes = "text/plain")
+    @PostMapping(value = {""})
     public ResponseEntity<User> createUser(@RequestBody User userDto) {
         User user = userService.create(userDto);
         System.out.println(userDto.getEmail());
