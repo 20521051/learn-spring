@@ -12,6 +12,7 @@ public class UserService {
 
     // Create a new user
     public User create(User user) {
+        System.out.println(user.getEmail());
         return userRepository.save(user);
     }
 }
